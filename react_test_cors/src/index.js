@@ -1,31 +1,43 @@
 import React from 'react';
 import  ReactDOM  from 'react-dom';
+import { createStore } from 'redux';
 
 
-function getButtonText(){
-    return 'hi there'
+//Store 
+
+//actions
+
+const increment =() =>{
+    return {
+        type:"INCREMENT"
+    }
 }
 
-const style = {
-    text: 'submit',
-    backgroundColor:'green'
+const decrement =()=>{
+    return {
+        type:"DECREMENT"
+    }
 }
 
-const App = () => {
+//reducer
+const counter =(state=0, action) =>{
+     switch(action.type){
+         case "INCREMENT":
+             return state + 1
+         break
 
-    return(
-        <div>
-            <label htmlFor="name">Name</label> 
-            <h1>Hello</h1>
-            <p>here</p>
-            <button style={{backgroundColor:'red', color: 'white'}}> {style.text} {getButtonText()}</button>
-
-        </div>
-     
-    )
+         case "DECREMENT":
+              return state - 1
+         break
+     }
 }
 
-ReactDOM.render(
-    <App />,
-    document.querySelector('#root')
-)
+let store = createStore(counter)   //pass a reducer to a store
+
+
+//display in console
+store.subscribe(()=>{console.log(store.getState())})
+
+//dispatch
+store.dispatch(increment)
+
